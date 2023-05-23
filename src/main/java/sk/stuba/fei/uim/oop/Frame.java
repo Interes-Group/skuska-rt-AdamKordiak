@@ -1,13 +1,20 @@
 package sk.stuba.fei.uim.oop;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
+import java.util.SimpleTimeZone;
 
-public class Frame extends JFrame {
+
+public class Frame extends JFrame implements ActionListener,ChangeListener {
     MyCanvas canvas = new MyCanvas();
     private JSlider length;
     private JSlider radius;
     private JSlider spacing;
+    private Shape shape;
 
 
     Frame() {
@@ -15,12 +22,15 @@ public class Frame extends JFrame {
         this.setSize(500,500);
         setLayout(new BorderLayout());
 
-       rightPanel(canvas);
+        rightPanel();
         add(canvas);
+        this.setLocationRelativeTo(null);
+
         this.setVisible(true);
+
     }
 
-    public void rightPanel(MyCanvas canvas){
+    public void rightPanel(){
 
 
         JPanel texts = new JPanel(new GridLayout(1, 3));
@@ -45,6 +55,8 @@ public class Frame extends JFrame {
         lenghtSlider.setPaintLabels(true);
         lenghtSlider.setSnapToTicks(true);
 
+        lenghtSlider.addChangeListener(this);
+
 
 
         JSlider radiusSlider = new JSlider();
@@ -57,6 +69,7 @@ public class Frame extends JFrame {
         radiusSlider.setPaintTicks(true);
         radiusSlider.setPaintLabels(true);
         radiusSlider.setSnapToTicks(true);
+        radiusSlider.addChangeListener(this);
 
 
 
@@ -71,6 +84,7 @@ public class Frame extends JFrame {
         spacingSlider.setPaintTicks(true);
         spacingSlider.setPaintLabels(true);
         spacingSlider.setSnapToTicks(true);
+        spacingSlider.addChangeListener(this);
 
 
         this.length = lenghtSlider;
@@ -85,7 +99,8 @@ public class Frame extends JFrame {
         JComboBox<Shape> combobox = new JComboBox<>();
         combobox.addItem(Shape.CIRCLE);
         combobox.addItem(Shape.SQUARE);
-        combobox.addItem(Shape.HOURGLASS);
+        combobox.addItem(Shape.TIMER);
+        combobox.addActionListener(this);
 
         sideMenu.add(texts, BorderLayout.NORTH);
         sideMenu.add(sliders, BorderLayout.CENTER);
@@ -94,7 +109,38 @@ public class Frame extends JFrame {
         add(sideMenu,BorderLayout.EAST);
 
     }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        System.out.println("Ssss");
+        JComboBox<?> comboBox = (JComboBox<?>) e.getSource();
+        Object selectedItem = comboBox.getSelectedItem();
+        Shape selectedShape = (Shape) selectedItem;
+        this.canvas.setShape(selectedShape);
+
 
     }
+    @Override
+    public void stateChanged(ChangeEvent e) {
+
+        if (e.getSource() == this.length) {
+            int lengthValue = this.length.getValue();
+            this.canvas.setLength(lengthValue);
+        }
+        if (e.getSource() == this.radius) {
+            int radiusValueValue = this.radius.getValue();
+            this.canvas.setRadius(radiusValueValue);
+        }
+        if (e.getSource() == this.spacing) {
+            int spacingValue = this.spacing.getValue();
+            this.canvas.setSpacing(spacingValue);
+        }
+        if (e.getSource() == this.shape) {
+            this.canvas.setShape(shape);
+        }
+
+        this.repaint();
+        }
+
+}
 
 

@@ -1,27 +1,47 @@
 package sk.stuba.fei.uim.oop;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class MyCanvas extends JPanel implements MouseListener, MouseMotionListener, ChangeListener, ActionListener {
+public class MyCanvas extends JPanel implements MouseListener, MouseMotionListener, ActionListener {
     private int length;
     private int radius;
     private int spacing;
     private Shape shape;
+
+    private List<Point> points;
 
     MyCanvas() {
         this.length = 50;
         this.radius = 5;
         this.spacing = 5;
         this.shape = Shape.CIRCLE;
-        this.shape = Shape.SQUARE;
+        this.points = new ArrayList<>();
+
+
 
         addMouseMotionListener(this);
     }
 
+    public void setLength(int length) {
+        this.length = length;
+
+    }
+    public void setRadius(int radius) {
+        this.radius = radius;
+
+    }
+    public void setSpacing(int spacing) {
+        this.spacing = spacing;
+
+    }
+    public void setShape(Shape shape) {
+        this.shape = shape;
+
+    }
     @Override
     public void mouseMoved(MouseEvent e) {
 
@@ -30,20 +50,20 @@ public class MyCanvas extends JPanel implements MouseListener, MouseMotionListen
 
     }
     @Override
-    public void paintComponent(Graphics g) {
+    protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Point point = new Point();
 
-        g.setColor(Color.red);
-       if (this.shape.equals(Shape.CIRCLE)) {
-            this.shape.paint(point, g, this.radius);
-        }
-        if (this.shape.equals(Shape.SQUARE)) {
-            this.shape.paint(point, g, this.radius);
+        for (int i = points.size() - 1; i >= 0; i--) {
+            g.setColor(Color.red);
+
+            Point point = points.get(i);
+
+            if (i % this.spacing == 0 || i == points.size() - 1) {
+                this.shape.paint(point,g, this.radius);
+            }
 
         }
     }
-
     @Override
     public void mouseDragged(MouseEvent e) {
         this.mouseMoved(e);
@@ -55,14 +75,9 @@ public class MyCanvas extends JPanel implements MouseListener, MouseMotionListen
 
     }
 
-    @Override
-    public void stateChanged(ChangeEvent e) {
-
-    }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        this.repaint();
 
 
     }
@@ -74,7 +89,7 @@ public class MyCanvas extends JPanel implements MouseListener, MouseMotionListen
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        
     }
 
     @Override
