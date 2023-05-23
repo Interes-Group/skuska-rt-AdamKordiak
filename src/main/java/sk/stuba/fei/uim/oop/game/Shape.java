@@ -12,6 +12,7 @@ public enum Shape {
         } else if (this.equals(SQUARE)) {
             g.fillRect(actualPoint.x - radius, actualPoint.y - radius, radius * 2, radius * 2);
         } else if (this.equals(TIMER)) {
+            g.fillRect(actualPoint.x - radius, actualPoint.y - radius, radius * 2, radius * 2);
 
         }
 

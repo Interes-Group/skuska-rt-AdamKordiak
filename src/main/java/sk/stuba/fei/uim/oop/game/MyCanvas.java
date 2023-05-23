@@ -45,24 +45,38 @@ public class MyCanvas extends JPanel implements MouseListener, MouseMotionListen
     @Override
     public void mouseMoved(MouseEvent e) {
 
+
+        points.add(0, e.getPoint());
+        deleteLastPoint();
         this.repaint();
 
 
+    }
+    private void deleteLastPoint() {
+        if (points.size() > length) {
+            int numToRemove = points.size() - length;
+            points.subList(points.size() - numToRemove, points.size()).clear();
+        }
     }
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
         for (int i = points.size() - 1; i >= 0; i--) {
-            g.setColor(Color.red);
 
+            g.setColor(fromRedToBlack(i));
             Point point = points.get(i);
+            this.shape.paint(point,g, this.radius);
 
-            if (i % this.spacing == 0 || i == points.size() - 1) {
-                this.shape.paint(point,g, this.radius);
-            }
 
         }
+    }
+    private Color fromRedToBlack(int i) {
+        float gradient = i / (this.length - 1.0f);
+        float hue = gradient;
+        float saturation = 1;
+        float brightness = 1 - gradient;
+        return Color.getHSBColor(hue, saturation, brightness);
     }
     @Override
     public void mouseDragged(MouseEvent e) {
