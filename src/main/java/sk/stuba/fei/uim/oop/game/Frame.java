@@ -1,4 +1,4 @@
-package sk.stuba.fei.uim.oop;
+package sk.stuba.fei.uim.oop.game;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.util.SimpleTimeZone;
 
 
 public class Frame extends JFrame implements ActionListener,ChangeListener {
@@ -17,7 +16,7 @@ public class Frame extends JFrame implements ActionListener,ChangeListener {
     private Shape shape;
 
 
-    Frame() {
+    public Frame() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(500,500);
         setLayout(new BorderLayout());

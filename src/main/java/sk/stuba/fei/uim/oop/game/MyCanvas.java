@@ -1,4 +1,4 @@
-package sk.stuba.fei.uim.oop;
+package sk.stuba.fei.uim.oop.game;
 
 import javax.swing.*;
 import java.awt.*;
@@ -89,7 +89,7 @@ public class MyCanvas extends JPanel implements MouseListener, MouseMotionListen
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        
+
     }
 
     @Override
