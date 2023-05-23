@@ -53,6 +53,7 @@ public class MyCanvas extends JPanel implements MouseListener, MouseMotionListen
 
     }
     private void deleteLastPoint() {
+
         if (points.size() > length) {
             int numToRemove = points.size() - length;
             points.subList(points.size() - numToRemove, points.size()).clear();
@@ -66,7 +67,7 @@ public class MyCanvas extends JPanel implements MouseListener, MouseMotionListen
 
             g.setColor(fromRedToBlack(i));
             Point point = points.get(i);
-            this.shape.paint(point,g, this.radius);
+            this.shape.paintComponent(point,g, this.radius);
 
 
         }
